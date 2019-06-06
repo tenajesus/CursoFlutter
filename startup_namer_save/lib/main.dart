@@ -8,6 +8,8 @@ class RandomWordsState extends State<RandomWords> {
   //Todo Add build() method
   final _lista = <WordPair> [];
   final _tamanio = const TextStyle(fontSize:19.0);
+  //Añadimos _saved set para guardar las palabras
+  final _saved = Set<WordPair>();
 
  
   Widget _buildLista() {
@@ -24,10 +26,16 @@ class RandomWordsState extends State<RandomWords> {
       });
 }
   Widget _buildRow(WordPair pair) {
+  // Comprobamos que no sea un valor repetido
+  final bool alreadysaved = _saved.contains(pair);
   return ListTile(
     title: Text(
       pair.asPascalCase,
       style: _tamanio,
+    ),
+    trailing: Icon(
+      alreadysaved ? Icons.favorite : Icons.favorite_border,
+      color: alreadysaved ? Colors.red : null,
     ),
   );
  }
@@ -36,7 +44,7 @@ class RandomWordsState extends State<RandomWords> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Lista Infinita'),
+      title: Text('List View Generator w/Favs'),
     ),
     body: _buildLista(),
   );
